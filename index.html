@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Anamnese Nutricional</title>
+  <meta name="viewport" content="width=420, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wizard-viewport">
+  <div class="wizard-container">
+
+    <!-- TELA 1: Objetivo -->
+    <div class="wizard-screen" id="tela1">
+      <h2>Qual o seu principal objetivo?</h2>
+      <div class="option-list">
+        <button class="option-btn" onclick="selectOption('objetivo','ganhar_peso')">Ganhar peso</button>
+        <button class="option-btn" onclick="selectOption('objetivo','perder_peso')">Perder peso</button>
+        <button class="option-btn" onclick="selectOption('objetivo','manter_peso')">Manter peso</button>
+        <button class="option-btn" onclick="selectOption('objetivo','ganhar_massa')">Ganhar Massa Muscular</button>
+      </div>
+      <div class="btn-group">
+        <button onclick="nextTela(2)">Continuar</button>
+      </div>
+    </div>
+
+    <!-- TELA 2: Sexo biológico -->
+    <div class="wizard-screen" id="tela2">
+      <h2>Qual o seu sexo biológico?</h2>
+      <div class="info">Precisamos saber seu sexo para calcular com precisão o seu objetivo calórico diário.</div>
+      <div class="option-list">
+        <button class="option-btn" onclick="selectOption('sexo','feminino')">Feminino</button>
+        <button class="option-btn" onclick="selectOption('sexo','masculino')">Masculino</button>
+      </div>
+      <div class="btn-group">
+        <button onclick="voltarTela(1)" class="voltar-btn">Voltar</button>
+        <button onclick="nextTela(3)">Continuar</button>
+      </div>
+    </div>
+
+    <!-- TELA 3: Idade -->
+    <div class="wizard-screen" id="tela3">
+      <h2>Qual é sua idade?</h2>
+      <div class="input-row">
+        <input type="text" id="idade" placeholder="DD/MM/AAAA">
+      </div>
+      <div class="btn-group">
+        <button onclick="voltarTela(2)" class="voltar-btn">Voltar</button>
+        <button onclick="nextTela(4)">Continuar</button>
+      </div>
+    </div>
+
+    <!-- TELA 4: Altura -->
+    <div class="wizard-screen" id="tela4">
+      <h2>Qual é sua altura?</h2>
+      <div class="input-row">
+        <input type="number" id="altura" placeholder="cm" min="40" max="272">
+      </div>
+      <div class="btn-group">
+        <button onclick="voltarTela(3)" class="voltar-btn">Voltar</button>
+        <button onclick="nextTela(5)">Continuar</button>
+      </div>
+    </div>
+
+    <!-- TELA 5: Peso -->
+    <div class="wizard-screen" id="tela5">
+      <h2>Qual é o seu peso?</h2>
+      <div class="input-row">
+        <input type="number" id="peso" placeholder="kg" min="1" max="595">
+      </div>
+      <div class="btn-group">
+        <button onclick="voltarTela(4)" class="voltar-btn">Voltar</button>
+        <button onclick="nextTela(6)">Continuar</button>
+      </div>
+    </div>
+
+    <!-- TELA 6: Nível de atividade física diária -->
+    <div class="wizard-screen" id="tela6">
+      <h2>Qual o seu nível de atividade física diária?</h2>
+      <div class="option-list">
+        <button class="option-btn" onclick="selectOption('atividade','pouco')">
+          Pouca atividade<br><span style="font-size:.9em;color:#888;">Pouco tempo em pé, ex: escritório</span>
+        </button>
+        <button class="option-btn" onclick="selectOption('atividade','leve')">
+          Atividade leve<br><span style="font-size:.9em;color:#888;">Quase sempre em pé, ex: professor</span>
+        </button>
+        <button class="option-btn" onclick="selectOption('atividade','moderada')">
+          Atividade moderada<br><span style="font-size:.9em;color:#888;">Quase sempre caminhando, ex: vendas</span>
+        </button>
+        <button class="option-btn" onclick="selectOption('atividade','intensa')">
+          Atividade intensa<br><span style="font-size:.9em;color:#888;">Fisicamente árduo, ex: construção</span>
+        </button>
+      </div>
+      <div class="btn-group">
+        <button onclick="voltarTela(5)" class="voltar-btn">Voltar</button>
+        <button onclick="nextTela(7)">Continuar</button>
+      </div>
+    </div>
+
+    <!-- TELA 7: Horário de trabalho -->
+    <div class="wizard-screen" id="tela7">
+      <h2>Como é o seu horário de trabalho?</h2>
+      <div class="option-list">
+        <button class="option-btn" onclick="selectOption('trabalho','livre')">Posso escolher meu próprio horário</button>
+        <button class="option-btn" onclick="selectOption('trabalho','40h')">Trabalho 40 horas semanais</button>
+        <button class="option-btn" onclick="selectOption('trabalho','turnos')">Trabalho em turnos</button>
+      </div>
+      <div class="btn-group">
+        <button onclick="voltarTela(6)" class="voltar-btn">Voltar</button>
+        <button onclick="nextTela(8)">Continuar</button>
+      </div>
+    </div>
+
+    <!-- TELA 8: Doenças e cirurgias -->
+    <div class="wizard-screen" id="tela8">
+      <h2>Histórico de saúde</h2>
+      <div class="subgroup">
+        <label>Você possui alguma doença ou condição de saúde?</label>
+        <div class="row-center">
+          <input type="text" id="doencaInput" placeholder="Descreva a doença..." style="flex:1;">
+          <button type="button" onclick="addMultiItem('doenca')" style="width:90px;padding:9px 0;">Adicionar</button>
+        </div>
+        <ul id="doencaList" class="multi-list"></ul>
+      </div>
+      <div class="subgroup">
+        <label>Você já fez alguma cirurgia?</label>
+        <div class="row-center">
+          <input type="text" id="cirurgiaInput" placeholder="Descreva a cirurgia..." style="flex:1;">
+          <button type="button" onclick="addMultiItem('cirurgia')" style="width:90px;padding:9px 0;">Adicionar</button>
+        </div>
+        <ul id="cirurgiaList" class="multi-list"></ul>
+      </div>
+      <div class="btn-group">
+        <button onclick="voltarTela(7)" class="voltar-btn">Voltar</button>
+        <button onclick="nextTela(9)">Continuar</button>
+      </div>
+    </div>
+
+    <!-- TELA 9: Medicamentos e alergias -->
+    <div class="wizard-screen" id="tela9">
+      <h2>Histórico de saúde</h2>
+      <div class="subgroup">
+        <label>Você faz algum medicamento regularmente?</label>
+        <div class="row-center">
+          <input type="text" id="medicamentoInput" placeholder="Descreva o medicamento..." style="flex:1;">
+          <button type="button" onclick="addMultiItem('medicamento')" style="width:90px;padding:9px 0;">Adicionar</button>
+        </div>
+        <ul id="medicamentoList" class="multi-list"></ul>
+      </div>
+      <div class="subgroup">
+        <label>Você possui alguma alergia ou intolerância alimentar?</label>
+        <div class="row-center">
+          <input type="text" id="alergiaInput" placeholder="Descreva a alergia..." style="flex:1;">
+          <button type="button" onclick="addMultiItem('alergia')" style="width:90px;padding:9px 0;">Adicionar</button>
+        </div>
+        <ul id="alergiaList" class="multi-list"></ul>
+      </div>
+      <div class="btn-group">
+        <button onclick="voltarTela(8)" class="voltar-btn">Voltar</button>
+        <button onclick="nextTela(10)">Continuar</button>
+      </div>
+    </div>
+
+    <!-- TELA 10: Preferências alimentares e refeição principal -->
+    <div class="wizard-screen" id="tela10">
+      <h2>Preferências alimentares</h2>
+      <div class="subgroup">
+        <label>Você tem preferência por algum tipo de alimento?<br><span style="font-size:.9em;color:#888;">Ex: carboidratos, proteínas...</span></label>
+        <div class="row-center">
+          <input type="text" id="preferenciaInput" placeholder="Descreva a preferência..." style="flex:1;">
+          <button type="button" onclick="addMultiItem('preferencia')" style="width:90px;padding:9px 0;">Adicionar</button>
+        </div>
+        <ul id="preferenciaList" class="multi-list"></ul>
+      </div>
+      <div class="subgroup">
+        <label>Qual é sua refeição principal do dia?</label>
+        <div class="main-meal-options">
+          <div class="main-meal-option" onclick="selectOption('refeicao_principal','manha',this)">Manhã</div>
+          <div class="main-meal-option" onclick="selectOption('refeicao_principal','tarde',this)">Tarde</div>
+          <div class="main-meal-option" onclick="selectOption('refeicao_principal','noite',this)">Noite</div>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button onclick="voltarTela(9)" class="voltar-btn">Voltar</button>
+        <button onclick="nextTela(11)">Continuar</button>
+      </div>
+    </div>
+
+    <!-- TELA 11: Refeições e comportamentos -->
+    <div class="wizard-screen" id="tela11">
+      <h2>Quantas refeições você faz por dia?</h2>
+      <div class="row-center" style="margin-bottom: 18px;">
+        <button class="btn-counter" onclick="countChange('refeicoes',-1)">-</button>
+        <span id="refeicoesCount" style="font-size:1.25em;min-width:30px;">3</span>
+        <button class="btn-counter" onclick="countChange('refeicoes',1)">+</button>
+      </div>
+      <div class="subgroup" style="margin-bottom:10px;">
+        <label>Você costuma comer fora regularmente?</label>
+        <div class="input-radio-row">
+          <label><input type="radio" name="fora" value="sim" onchange="selectOption('comer_fora','sim')"><span>Sim</span></label>
+          <label><input type="radio" name="fora" value="nao" onchange="selectOption('comer_fora','nao')"><span>Não</span></label>
+        </div>
+      </div>
+      <div class="subgroup">
+        <label>Você tem algum comportamento alimentar como comer por impulso, emocional, etc?</label>
+        <div class="input-radio-row">
+          <label><input type="radio" name="comp" value="sim" onchange="selectOption('comp_alimentar','sim')"><span>Sim</span></label>
+          <label><input type="radio" name="comp" value="nao" onchange="selectOption('comp_alimentar','nao')"><span>Não</span></label>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button onclick="voltarTela(10)" class="voltar-btn">Voltar</button>
+        <button onclick="nextTela(12)">Continuar</button>
+      </div>
+    </div>
+
+    <!-- TELA 12: Dieta específica -->
+    <div class="wizard-screen" id="tela12">
+      <h2>Você segue uma dieta específica?</h2>
+      <div class="info">Vamos adaptar nossas recomendações às suas preferências.</div>
+      <div class="option-list">
+        <button class="option-btn" onclick="selectOption('dieta','classica')">Clássica</button>
+        <button class="option-btn" onclick="selectOption('dieta','pescetariana')">Pescetariana</button>
+        <button class="option-btn" onclick="selectOption('dieta','vegetariana')">Vegetariana</button>
+        <button class="option-btn" onclick="selectOption('dieta','vegana')">Vegana</button>
+      </div>
+      <div class="btn-group">
+        <button onclick="voltarTela(11)" class="voltar-btn">Voltar</button>
+        <button onclick="nextTela(13)">Continuar</button>
+      </div>
+    </div>
+
+    <!-- TELA 13: Rotina de sono -->
+    <div class="wizard-screen" id="tela13">
+      <h2>Rotina de sono</h2>
+      <div class="subgroup">
+        <label>Quantas horas de sono você tem por noite?</label>
+        <div class="row-center" style="margin-bottom: 12px;">
+          <button class="btn-counter" onclick="countChange('sono',-1)">-</button>
+          <span id="sonoCount" style="font-size:1.25em;min-width:30px;">7</span>
+          <button class="btn-counter" onclick="countChange('sono',1)">+</button>
+        </div>
+      </div>
+      <div class="subgroup">
+        <label>Você tem dificuldade para dormir?</label>
+        <div class="input-radio-row">
+          <label><input type="radio" name="dormir" value="sim" onchange="selectOption('dif_sono','sim')"><span>Sim</span></label>
+          <label><input type="radio" name="dormir" value="nao" onchange="selectOption('dif_sono','nao')"><span>Não</span></label>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button onclick="voltarTela(12)" class="voltar-btn">Voltar</button>
+        <button onclick="nextTela(14)">Continuar</button>
+      </div>
+    </div>
+
+    <!-- TELA 14: Hábito de consumo de bebidas -->
+    <div class="wizard-screen" id="tela14">
+      <h2>Hábito de consumo de bebidas</h2>
+      <div class="subgroup">
+        <strong>1. Sobre bebidas alcoólicas</strong>
+        <div style="margin-bottom:9px;color:#555;">Algumas perguntas sobre consumo de bebidas alcoólicas nos ajudam a entender melhor sua rotina e hábitos de saúde. Se sentir à vontade, por favor, responda:</div>
+        <label>Você costuma consumir bebidas alcoólicas?</label>
+        <div class="input-radio-row" id="alcool_opcoes">
+          <label><input type="radio" name="alcool" value="sim" onchange="alteraAlcool(this.value)"><span>Sim</span></label>
+          <label><input type="radio" name="alcool" value="nao" onchange="alteraAlcool(this.value)"><span>Não</span></label>
+          <label><input type="radio" name="alcool" value="prefiro_nao" onchange="alteraAlcool(this.value)"><span>Prefiro não responder</span></label>
+        </div>
+        <div id="alcool_frequencia" style="display:none; margin-top:7px;">
+          <label>Com que frequência você consome bebidas alcoólicas?</label>
+          <div class="input-radio-row">
+            <label><input type="radio" name="frequencia_alcool" value="raramente" onchange="alteraFreqAlcool(this.value)"><span>Raramente (menos de 1 vez por semana)</span></label>
+            <label><input type="radio" name="frequencia_alcool" value="ocasionalmente" onchange="alteraFreqAlcool(this.value)"><span>Ocasionalmente (1–2 vezes por semana)</span></label>
+            <label><input type="radio" name="frequencia_alcool" value="frequentemente" onchange="alteraFreqAlcool(this.value)"><span>Frequentemente (3 ou mais vezes por semana)</span></label>
+          </div>
+        </div>
+      </div>
+      <div class="subgroup">
+        <strong>2. Sobre bebidas cafeinadas (café, chás, energéticos)</strong>
+        <div style="margin-bottom:9px;color:#555;">Essas informações ajudam a montar um plano alimentar adequado às suas preferências e necessidades.</div>
+        <label>Com que frequência você consome bebidas com cafeína?</label>
+        <div class="input-radio-row" id="cafeina_opcoes">
+          <label><input type="radio" name="cafeina" value="nunca" onchange="alteraCafeina(this.value)"><span>Nunca</span></label>
+          <label><input type="radio" name="cafeina" value="raramente" onchange="alteraCafeina(this.value)"><span>Raramente</span></label>
+          <label><input type="radio" name="cafeina" value="1xdia" onchange="alteraCafeina(this.value)"><span>1 vez ao dia</span></label>
+          <label><input type="radio" name="cafeina" value="2mais" onchange="alteraCafeina(this.value)"><span>2 ou mais vezes ao dia</span></label>
+        </div>
+      </div>
+      <div class="btn-group">
+        <button onclick="voltarTela(13)" class="voltar-btn">Voltar</button>
+        <button onclick="nextTela(15)">Continuar</button>
+      </div>
+    </div>
+
+    <!-- TELA 15: Bem-estar -->
+    <div class="wizard-screen" id="tela15">
+      <h2>Como você avalia seu bem-estar?</h2>
+      <div class="option-list">
+        <button class="option-btn" onclick="selectOption('bem_estar','estresse')">Sentimento de estresse</button>
+        <button class="option-btn" onclick="selectOption('bem_estar','ansiedade')">Ansiedade</button>
+        <button class="option-btn" onclick="selectOption('bem_estar','depressao')">Depressão</button>
+        <button class="option-btn" onclick="selectOption('bem_estar','bem')">Bem</button>
+      </div>
+      <div class="btn-group">
+        <button onclick="voltarTela(14)" class="voltar-btn">Voltar</button>
+        <button onclick="enviarAnamnese()">Enviar</button>
+      </div>
+    </div>
+
+    <!-- Tela de agradecimento -->
+    <div class="wizard-screen" id="tela16">
+      <h2>Obrigado!<br>Sua anamnese foi enviada.</h2>
+    </div>
+  </div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

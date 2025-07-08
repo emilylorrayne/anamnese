@@ -1,0 +1,183 @@
+/* Estilo geral da página e do fundo */
+body {
+  min-height: 100vh;
+  min-width: 100vw;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ededed;
+  font-family: Arial, sans-serif;
+}
+
+/* Área central que contém todo o wizard */
+.wizard-viewport {
+  width: 100vw; height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Container principal do wizard, caixa branca arredondada */
+.wizard-container {
+  background: #f7f7f7;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.14);
+  width: 420px; min-height: 430px;
+  padding: 44px 38px;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+  border: 2px solid #cfd8dc;
+  position: relative;
+}
+
+/* Cada tela/passo do wizard (aparece uma de cada vez) */
+.wizard-screen {
+  width: 100%; min-height: 320px;
+  display: none;
+  flex-direction: column; align-items: center; justify-content: flex-start;
+  animation: fadein 0.5s; position: relative;
+}
+@keyframes fadein { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
+/* Primeira tela aparece por padrão */
+.wizard-screen:first-child { display: flex;}
+
+/* Título de cada passo */
+h2 {
+  margin-bottom: 20px; color: #1586c1; font-size: 1.25em; text-align: center; width: 100%;
+  font-weight: bold; letter-spacing: 0.5px;
+}
+
+/* Lista de opções (botões principais de escolha) */
+.option-list {
+  display: flex; flex-direction: column; gap: 18px; width: 100%; align-items: center;
+  margin-bottom: 30px;
+}
+
+/* Botão de opção (ex: objetivo, sexo, atividade...) */
+.option-btn {
+  background: #fff;
+  border: 2px solid #b0bec5;
+  border-radius: 10px;
+  padding: 18px 10px 10px 10px;
+  color: #134060; font-size: 1.07em; width: 90%;
+  display: flex; flex-direction: column; align-items: center;
+  cursor: pointer; box-shadow: 0 1px 5px rgba(0,0,0,0.07);
+  transition: border 0.2s, box-shadow 0.2s;
+  font-weight: 500;
+  gap: 7px;
+  outline: none;
+}
+
+/* Estado selecionado do botão de opção */
+.option-btn.selected, .option-btn:hover {
+  border: 2.5px solid #1586c1;
+  box-shadow: 0 3px 12px rgba(21,134,193,0.12);
+  background: #e3f2fd;
+}
+
+/* Linha para campos de texto/numérico (ex: idade, altura, peso) */
+.input-row {
+  display: flex; align-items: center; gap: 14px; width: 98%; margin-bottom: 24px;
+  justify-content: center;
+}
+
+/* Campos de entrada (input) */
+input[type="text"], input[type="number"] {
+  padding: 10px; border: 2px solid #b0bec5; border-radius: 8px; font-size: 1.07em;
+  width: 80%; text-align: center; background: #fff; color: #22577a; transition: border .2s;
+}
+input[type="text"]:focus, input[type="number"]:focus {
+  border: 2.5px solid #1586c1; outline: none; background: #e3f2fd;
+}
+
+/* Grupo de botões (voltar, continuar/enviar) */
+.btn-group {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: auto;
+  margin-bottom: 10px;
+  position: static;
+}
+
+/* Botões principais (continuar, enviar) */
+button {
+  background: linear-gradient(90deg, #1586c1 50%, #badc58 100%);
+  color: #fff; border: none; border-radius: 6px; padding: 13px 0;
+  font-size: 1.08em; width: 58%; cursor: pointer; margin-top: 0; margin-bottom: 6px;
+  font-weight: 600; box-shadow: 0 2px 6px rgba(21,134,193,0.10);
+  transition: background 0.18s, box-shadow 0.18s;
+}
+button:hover {
+  background: linear-gradient(90deg, #badc58 60%, #1586c1 100%);
+  box-shadow: 0 5px 12px rgba(21,134,193,0.13);
+}
+
+/* Botão "Voltar" */
+.voltar-btn {
+  background: linear-gradient(90deg,#b0bec5 60%,#e0eafc 100%) !important; color: #22577a !important;
+  width: 38% !important; font-weight: 600; box-shadow: 0 2px 6px rgba(66,139,202,0.10) !important;
+  border: none; margin-right: 0;
+}
+.voltar-btn:hover { background: linear-gradient(90deg,#e0eafc 60%,#b0bec5 100%) !important;}
+
+/* Texto de ajuda/informação */
+.info {
+  color: #388e3c; font-size: 0.97em; margin-bottom: 5px; margin-top: -5px; text-align: center; width: 100%;
+}
+
+/* Linha centralizada para inputs e botões (ex: adicionar item em listas) */
+.row-center { display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+/* Botão de contador (ex: refeições, sono) */
+.btn-counter {
+  background: #fff; color: #1586c1; font-size: 1.3em; width: 38px; height: 38px;
+  border-radius: 100%; border: 2px solid #badc58; box-shadow: none; font-weight: bold;
+  margin: 0; display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, border .15s;
+}
+.btn-counter:hover { background: #e3f2fd; border-color: #1586c1; }
+
+/* Listas múltiplas (doenças, cirurgias, medicamentos, etc.) */
+.multi-list {
+  list-style: none; padding: 0; margin: 8px 0 0 0; width: 100%;
+  max-height: 100px; overflow-y: auto;
+}
+.multi-list li {
+  background: #e3f2fd; padding: 5px 8px; border-radius: 5px;
+  margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between;
+  font-size: 1em;
+}
+.multi-list button {
+  background: #fc575e; color: #fff; border: none; border-radius: 3px;
+  padding: 1px 8px; margin-left: 10px; cursor: pointer; width: auto;
+  font-size: .97em; box-shadow: none;
+}
+.multi-list button:hover { background: #f7b42c; color: #fff;}
+
+/* Espaçamento extra em grupos de perguntas */
+.subgroup { margin-bottom: 16px; }
+
+/* Linha de opções de rádio */
+.input-radio-row {
+  display: flex; gap: 18px; justify-content: center; margin-bottom: 12px; margin-top: 4px;
+  flex-wrap: wrap;
+}
+.input-radio-row label {
+  display: flex; align-items: center; gap: 7px; font-size: 1.05em; color: #22577a; font-weight: 500;
+  background: #fff; padding: 5px 13px; border-radius: 8px; border: 1.5px solid #cfd8dc;
+  cursor: pointer; transition: border 0.17s;
+}
+.input-radio-row input[type="radio"]:checked + span {
+  color: #1586c1; font-weight: bold;
+}
+.input-radio-row input[type="radio"] { accent-color: #badc58; }
+
+/* Botões de refeição principal (tela 10) */
+.main-meal-option {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: #fff; border: 1.5px solid #b0bec5; border-radius: 10px; width: 96px; padding: 13px 0 7px 0;
+  cursor: pointer; transition: border 0.18s, background 0.18s;
+}
+.main-meal-option.selected, .main-meal-option:hover { background: #e3f2fd; border: 2.5px solid #1586c1; }
+.main-meal-options { display: flex; gap: 18px; justify-content: center; margin-bottom: 18px; }
